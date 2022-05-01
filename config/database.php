@@ -1,26 +1,32 @@
 <?php
-class Database
+class database
 	{
-	// credenziali
-	private $host = "172.17.0.1";
-	private $db_name = "mydb";
-	private $username = "root";
-	private $password = "";
-	public $conn;
-	// connessione al database
-	public function getConnection()
-		{
-		$this->conn = null;
-		try
-			{
-			$this->conn = mysqli_connect("mysql:host=" . $this->host . "; dbname=" . $this->db_name, $this->username, $this->password);
-			$this->conn->exec("set names utf8");
-			}
-		catch(PDOException $exception)
-			{
-			echo "Errore di connessione: " . $exception->getMessage();
-			}
-		return $this->conn;
-		}
+		private $nomeServer;
+		private $nomeUtente;
+		private $password;
+		private $nomeDatabase;
+		private $connessione;
+  
+	  public function __construct()
+	 {
+		$this->nomeServer = "172.17.0.1";
+		$this->nomeUtente = "root";
+		$this->password = "1234";
+		$this->nomeDatabase = "mydb";
+	 }
+	 
+	 public function OpenCon()
+	 {      
+		
+  
+		$this->connessione = mysqli_connect($this->nomeServer, $this->nomeUtente, $this->password, $this->nomeDatabase);
+	 
+		return $this->connessione;
+	 }
+	 
+	 public function CloseCon($c)
+	 {
+		$c->close();
+	 }
 	}
 ?>
